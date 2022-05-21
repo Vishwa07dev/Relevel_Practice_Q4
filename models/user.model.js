@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
     },
     userType : {
         type : String,
-        default : constants.userType.customer
+        default : constants.userType.customer,
+        enum : [constants.userType.admin,constants.userType.customer]
     },
     ordersCreated : {
         type : [mongoose.SchemaTypes.ObjectId],

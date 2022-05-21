@@ -10,6 +10,10 @@ const orderSchema = new mongoose.Schema({
      *  timestamp,status,items,totalCost,zipcode,userId
      * 
      */
+    userId : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        ref :"Users"
+    },
     items: {
         type: [String],
         required: true
