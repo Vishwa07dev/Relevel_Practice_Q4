@@ -13,6 +13,6 @@ module.exports = (app)=>{
 
     app.put("/OrderingApp/api/v1/orders/{id}", [authCheckPoint.validateSignInRequest, authCheckPoint.isValidOrder], orderController.updateOrder);
 
-    app.delete("/OrderingApp/api/v1/orders", [authCheckPoint.validateSignInRequest, authCheckPoint.isValidOrder], orderController.deleteOrder);
+    app.delete("/OrderingApp/api/v1/orders", [authCheckPoint.validateSignInRequest, authCheckPoint.isValidOrder], orderController.cancelOrder);
  
 }

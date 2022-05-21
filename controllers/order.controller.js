@@ -1,6 +1,7 @@
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
 const objectConverter = require("../utils/objectConverter");
+const constants = require("../utils/constants");
 
 
 exports.createOrder = async (req, res) => {
@@ -20,7 +21,7 @@ exports.createOrder = async (req, res) => {
     const orderCreated = await Order.create(orderObjToBeStoredInDB);
 
     if(!orderCreated) {
-        return res.status(500).send({message: "Order Created Failed"});
+        return res.status(500).send({message: "Order Creation Failed"});
     }
 
     await user.orders.push(orderCreated._id);
@@ -28,7 +29,7 @@ exports.createOrder = async (req, res) => {
     return res.status(201).send(orderCreated);
     }  catch (err) {
         console.log(err);
-        return res.status(500).send({message: "Order Created Failed"});
+        return res.status(500).send({message: "Order Creation Failed"});
     }
 
 }
@@ -69,10 +70,10 @@ exports.getAllOrders = async (req, res) => {
     }
 }
 
-exports.deleteOrder = async (req, res) => {
+exports.cancelOrder = async (req, res) => {
 
     try {
-        const order = await Order.findOneAndDelete({
+        const order = await Order.find({
         _id: req.params.id
     });
 
@@ -82,24 +83,19 @@ exports.deleteOrder = async (req, res) => {
         });
     }
 
-    const user = await User.find({userId:req.userId});
+    order.status = constants.orderStatus.cancelled;
 
-    const orders = user.orders;
-
-    const index = orders.indexOf(req.params.id);
-
-    user.orders.shift(index, 1);
-    
-    await user.save();
+    await order.save();
 
     return res.status(200).send({
+        order: order,
         success: true,
-        message: "order has been deleted"
+        message: "order has been cancelled successfully"
     });
     } catch (err) {
         console.log(err);
         return res.status(500).send({
-            message: "Some internal error occurred while deleting order"
+            message: "Some internal error occurred while cancelling order"
         });
     }
 }  
