@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
        required: true
     },
     orderStatus : {
-        type: string,
+        type: String,
         required: true,
         default: constants.orderStatus.inProgress,
         enum: [constants.orderStatus.inProgress, constants.orderStatus.failed, constants.orderStatus.failed, constants.orderStatus.success]

@@ -9,22 +9,15 @@ const config = require("../configs/auth.config");
  * Controller for signup/registration
  */
 exports.signup = async (req, res) => {
-    
-    //How the user sign up will happen
-    var userStatus = req.body.userStatus ;
 
-    if(!userStatus){
-        if(!req.body.userType || req.body.userType == constants.userTypes.customer){
-            userStatus = constants.userStatus.approved;
-        }else{
-            userStatus = constants.userStatus.pending;
-        }
-    }
+   // signup logic   
+
     const userObjToBeStoredInDB = {
         name : req.body.name,
         userId : req.body.userId,
         email : req.body.email,
         userType : req.body.userType,
+        address: req.body.address,
         password : bcrypt.hashSync(req.body.password,8),
         userStatus : userStatus
     }
@@ -78,14 +71,7 @@ exports.signin = async (req, res) =>{
         })
     }
 
-    /**
-     * Check if the user is approved
-     */
-    if(user.userStatus != constants.userStatus.approved){
-        return res.status(200).send({
-            message : "Can't allow the login as the User is still not approved"
-        })
-    }
+   
 
     //User is existing, so now we will do the password matching
     const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
