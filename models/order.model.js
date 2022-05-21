@@ -4,19 +4,19 @@ const constants = require("../utils/constants");
 
 const orderSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: [mongoose.SchemaTypes.ObjectId],
         ref: "User",
     },
     status: {
         type: String,
-        enum: [constants.orderStatus.success, constants.orderStatus.cancelled, constants.orderStatus.success],
+        enum: [constants.orderStatus.success, constants.orderStatus.cancelled, constants.orderStatus.failed],
     },
     items: {
         type: [String],
         required : true
     },
     address: {
-        type: [String],
+        type: String,
         required: true
     },
     totalCost: {

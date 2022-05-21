@@ -8,18 +8,20 @@ exports.createOrder = async (req, res) => {
     const orderObjToBeStoredInDB = {
         items: req.body.items,
         totalCost: req.body.totalCost,
-        userId: req.body.userId,
         address: req.body.address
     };
 
     try {
+
+    const user = await User.find({userId: req.userId});
+
+    orderObjToBeStoredInDB.userId = user._id;
+
     const orderCreated = await Order.create(orderObjToBeStoredInDB);
 
     if(!orderCreated) {
         return res.status(500).send({message: "Order Created Failed"});
     }
-
-    const user = await User.find({userId: orderObjToBeStoredInDB.userId});
 
     await user.orders.push(orderCreated._id);
 
@@ -34,9 +36,9 @@ exports.createOrder = async (req, res) => {
 exports.getOrder = async (req, res) => {
 
     try {
-        const userId = req.params.id;
+        const orderId = req.params.id;
 
-        const order = await Order.find({userId: userId});
+        const order = await Order.find({orderId: orderId});
 
         return res.status(200).send(order);
     } catch (err) {

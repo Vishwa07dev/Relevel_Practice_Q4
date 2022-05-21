@@ -18,4 +18,4 @@ mongoose.connect(dbConfig.DB_URL, async () => {
 
 app.listen(serverConfig.PORT, () => {
     console.log(`Get Fit App listening on port ${serverConfig.PORT}`);
-})
+});
