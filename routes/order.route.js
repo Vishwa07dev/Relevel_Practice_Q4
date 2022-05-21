@@ -18,7 +18,7 @@ module.exports = (app)=>{
     app.get("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.getoneOrder);
 
     // PUT 127.0.0.1:8081/OrderingApp/api/v1/orders/:id
-    app.put("/OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.updateOrder);
+    app.put("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.updateOrder);
 
     // DELETE 127.0.0.1:8081/OrderingApp/api/v1/orders/:id
     app.delete("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.cancelOrder);
