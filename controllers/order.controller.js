@@ -127,9 +127,9 @@ exports.updateOrder = async (req, res) => {
 }
 
 /**
- * Delete Order object
+ * Update Order status to Cancelled
  */
-exports.deleteOrder = async (req, res) => {
+exports.cancelOrder = async (req, res) => {
     try {
         const order = await Order.findOne({
             _id: req.params.id
@@ -144,23 +144,6 @@ exports.deleteOrder = async (req, res) => {
 
         order.status = constants.orderStatus.cancelled;
         await order.save();
-
-        // const user = await User.findOne({
-        //     userId: req.userId
-        // });
-
-        // delete object from database
-        // await Order.deleteOne({
-        //     _id: req.params.id
-        // });
-
-        // remove record from user orders
-        // let removableIndex = user.orders.indexOf(order._id);
-        // if (removableIndex > -1) {
-        //     user.orders.splice(removableIndex, 1);
-        // }
-        // // save user
-        // const updatedUser = await user.save();
         
         res.status(200).send({
             message : "Order succesfully deleted"

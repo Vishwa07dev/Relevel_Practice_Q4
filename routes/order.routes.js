@@ -15,7 +15,7 @@ module.exports = (app)=>{
 
     app.put("/deliveryService/api/v1/orders/:id", [authJwt.verifyToken, authJwt.isValidCustomerOrAdmin], orderController.updateOrder);
 
-    app.delete("/deliveryService/api/v1/orders/:id", [authJwt.verifyToken, authJwt.isValidCustomerOrAdmin], orderController.deleteOrder);
+    app.delete("/deliveryService/api/v1/orders/:id", [authJwt.verifyToken, authJwt.isValidCustomerOrAdmin], orderController.cancelOrder);
     
     app.get("/deliveryService/api/v1/orders", [authJwt.verifyToken], orderController.getAllOrders);
     
