@@ -36,6 +36,13 @@ verifyToken = (req,res, next) =>{
         }
         //I will try to read the userId from the decoded token and store it in req object
         req.userId = decoded.id;
+
+        if(user == null){
+            return res.status(400).send({
+                message: "User Doesnt Exist"
+            });
+        }
+
         next();
     } )
 
@@ -70,6 +77,7 @@ isValidCustomerOrAdmin = async (req,res, next) =>{
      */
     const user = await User.findOne({userId : req.userId});
 
+    console.log(req.userId, user);
     // get order based on id from database
     const order = await Order.findOne({
         _id: req.params.id

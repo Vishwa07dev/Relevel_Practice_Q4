@@ -116,7 +116,7 @@ exports.updateOrder = async (req, res) => {
         const updatedOrder = await order.save();
     
         // return saved object
-        return res.status(200).send(updatedOrder);
+        return res.status(201).send(updatedOrder);
     }catch(err){
         console.log(err.message);
         return res.status(500).send({
