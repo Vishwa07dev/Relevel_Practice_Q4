@@ -32,7 +32,7 @@ const constants = require("../utils/constants");
          unqiue : true
      },
      address: {
-         type: [String],
+         type: String,
          required: true
      },
      createdAt : {
