@@ -1,16 +1,23 @@
-/**
- * This file will act as the route for authentication and authorzation
- * 
- */
 
-// define the routes - REST endpoints for user registration
-const authController = require("../controllers/auth.controller")
-
+// define the routes - REST endpoints
+const orderController = require("../controllers/order.controller")
+const {authJwt} = require('../middleware');
 module.exports = (app)=>{
     
-    //  POST 127.0.0.1:8080/orderingApp/api/v1/auth/signup
-    app.post("/OrderingApp/api/v1/auth/signup", authController.signup);
+    //  POST 127.0.0.1:8081/OrderingApp/api/v1/orders
+    app.post(" /OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.createOrder);
+    
+    // PUT 127.0.0.1:8081/OrderingApp/api/v1/orders/:id
+    app.put("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.updateOrder);
+    
+    // GET 127.0.0.1:8081/OrderingApp/api/v1/orders
+    app.get("/OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.getAllOrder);
+    
+    // GET 127.0.0.1:8081/OrderingApp/api/v1/orders/:id
+    app.get("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.getoneOrder);
+    
+    // DELETE 127.0.0.1:8081/OrderingApp/api/v1/orders/:id
+    app.delete("/OrderingApp/api/v1/orders/:id",[authJwt.verifyToken],orderController.cancelOrder);
 
-    //Sign POST 127.0.0.1:8080/orderingApp/api/v1/auth/signin
-    app.post("/OrderingApp/v1/auth/signin", authController.signin);
+    
 }
