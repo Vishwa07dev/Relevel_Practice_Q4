@@ -30,7 +30,7 @@ exports.createOrder = async (req, res) => {
         user.ordersCreated.push(order._id);
         await user.save();
 
-        return res.status(200).send(order);
+        return res.status(201).send(order);
     } catch (err) {
         console.log(err.message);
         return res.status(500).send({
@@ -159,7 +159,7 @@ exports.cancelOrder = async (req, res) => {
 
     try {
         const user = await User.find({ userId: req.userId });
-        
+
         //checking if the user is the one who created the order  he is trying to fetch
         if (user.ordersCreated != order._id && user.userType != constants.userType.admin) {
 
