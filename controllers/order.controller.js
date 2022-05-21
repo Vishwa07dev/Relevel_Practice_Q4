@@ -52,7 +52,7 @@ exports.getAllOrders = async (req, res) => {
 
         // find all orders
         if(user.userType == constants.userType.customer){
-            queryObj.customerId = req._id;
+            queryObj.customerId = user._id;
         }
 
         const orders = await Order.find(queryObj);
