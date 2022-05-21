@@ -37,12 +37,6 @@ verifyToken = (req,res, next) =>{
         //I will try to read the userId from the decoded token and store it in req object
         req.userId = decoded.id;
 
-        if(user == null){
-            return res.status(400).send({
-                message: "User Doesnt Exist"
-            });
-        }
-
         next();
     } )
 
