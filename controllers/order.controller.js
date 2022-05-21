@@ -10,7 +10,7 @@ exports.createOrder = async (req, res) => {
 
     // prepare order object to store inside database
     const orderObj = {
-        userId: req.userId,
+        customerId: req.userId,
         timestamp: req.body.timestamp,
         status: constants.orderStatus.success,
         items: req.body.items,

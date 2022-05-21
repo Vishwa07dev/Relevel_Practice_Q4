@@ -76,7 +76,7 @@ isValidCustomerOrAdmin = async (req,res, next) =>{
     });
 
     if(user.userType != constants.userType.admin){
-        if(req.userId != order.userId){
+        if(req.userId != order.customerId){
             res.status(403).send({
                 message: "Requires OWNER/ADMIN role"
             })

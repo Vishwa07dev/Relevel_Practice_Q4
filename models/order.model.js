@@ -4,9 +4,9 @@ const constants = require("../utils/constants");
 const orderSchema = new mongoose.Schema({
 
     /**
-     * userId, Timestamp, status, items, totalCost, zipcode, createdAt , updatedAt
+     * customerId, Timestamp, status, items, totalCost, zipcode, createdAt , updatedAt
      */
-    userId  : {
+    customerId  : {
         type : mongoose.SchemaTypes.ObjectId,
         ref: "User"
     },
