@@ -84,7 +84,7 @@ exports.getoneOrder = async (req, res) => {
         }
 
         //checking if the user is the one who created the order  he is trying to fetch
-        if(order.user_id != user._id && user.userType != constants.userType.admin){
+        if(user.ordersCreated == order._id && user.userType != constants.userType.admin){
 
             return res.status(400).send({
                 message: "user dont have access to other user order"
@@ -111,18 +111,31 @@ exports.updateOrder = async (req, res) => {
             _id: req.params.id
         })
 
+        const user  = await User.find({userId : req.userId});
+
         //checking if vaild request 
         if (order == null) {
             return res.status(404).send({
                 message: "No order found by the id provided, please enter valid id"
             })
         }
+
+         //checking if the user is the one who created the order  he is trying to fetch
+         if(user.ordersCreated == order._id && user.userType != constants.userType.admin){
+
+            return res.status(400).send({
+                message: "user dont have access to other user order"
+            })
+        }
+
+
+
         //customer can update below fields only 
         order.items = req.body.items != undefined ? req.body.items : order.items;
         order.totalCost = req.body.totalCost != undefined ? req.body.totalCosts : order.totalCost;
         order.zipcode = req.body.zipcode != undefined ? req.body.zipcode : order.zipcode;
         
-        const user  = await User.find({userId : req.userId});
+        
 
         //only admin can update the status
         if(user.usertype == constants.userType.admin){
