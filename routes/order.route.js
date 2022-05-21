@@ -9,7 +9,7 @@ const {authJwt} = require('../middleware');
 module.exports = (app)=>{
     
     //  POST 127.0.0.1:8081/OrderingApp/api/v1/orders
-    app.post(" /OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.createOrder);
+    app.post("/OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.createOrder);
 
     // GET 127.0.0.1:8081/OrderingApp/api/v1/orders
     app.get("/OrderingApp/api/v1/orders",[authJwt.verifyToken],orderController.getAllOrder);

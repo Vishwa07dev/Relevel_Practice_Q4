@@ -7,7 +7,7 @@ module.exports = {
     },
     orderStatus : {
         success : "SUCCESS",
-        cancled : "CANCELED",
+        canceled : "CANCELED",
         failed : "FAILED"
     }
 }

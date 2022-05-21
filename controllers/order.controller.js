@@ -13,13 +13,23 @@ const constants = require('../utils/constant');
 exports.createOrder = async (req, res) => {
 
     const orderObjToBeStored = {
-        userId: req.userId,
-        item: req.body.item,
+        user_id: req.userId,
+        items: req.body.items,
         totalCost: req.body.totalCost,
-        zipcode: req.body.zipcode
+        zipcode: req.body.zipcode,
+        ordersCreated : []
     }
     try {
         const order = await Order.create(orderObjToBeStored);
+
+        //Getting the user who created the order 
+        const user = await User.findOne({
+            userId : req.userId
+        })
+
+        //adding the order id to user model 
+        user.ordersCreated.push(order._id);
+        await user.save();
 
         return res.status(200).send(order);
     } catch (err) {
@@ -35,14 +45,16 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrder = async (req, res) => {
 
     try {
-        const user = await User.findOne({userId : req.userId});
+        const user = await User.findOne({ userId : req.userId});
 
+        console.log(user);
+        
         //admin will have access to all the order 
-        if(user.usertype == constants.userType.admin){
+        if(user.userType == constants.userType.admin){
             var order = await Order.find();
         }else{
             //customer can only see the order created bny him 
-            var order = await Order.find({userId : user.userId});
+            var order = await Order.find({userId : user._id});
         }
         return res.status(200).send(order);
     } catch (err) {
@@ -58,7 +70,7 @@ exports.getAllOrder = async (req, res) => {
 exports.getoneOrder = async (req, res) => {
 
     try {
-        const order = await findOne({
+        const order = await Order.findOne({
             _id: req.params.id
         })
 
@@ -72,7 +84,8 @@ exports.getoneOrder = async (req, res) => {
         }
 
         //checking if the user is the one who created the order  he is trying to fetch
-        if(order.userId != user._id && user.userType != constants.userType.admin){
+        if(order.user_id != user._id && user.userType != constants.userType.admin){
+
             return res.status(400).send({
                 message: "user dont have access to other user order"
             })

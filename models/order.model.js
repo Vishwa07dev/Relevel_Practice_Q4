@@ -10,17 +10,14 @@ const orderSchema = new mongoose.Schema({
      *  timestamp,status,items,totalCost,zipcode,userId
      * 
      */
-    userId :{
-        type : [mongoose.SchemaTypes.ObjectId],
-        ref : "User"
-    },
     items: {
         type: [String],
         required: true
     },
     status : {
         type : String,
-        required : true
+        default : constants.orderStatus.success,
+        enum : [constants.orderStatus.success,constants.orderStatus.failed,constants.orderStatus.canceled]
     },
     totalCost : {
         type : Number,
