@@ -4,13 +4,13 @@ const constants = require("../utils/constants");
 const orderSchema = new mongoose.Schema({
 
     /**
-     * customerId, Timestamp, status, items, totalCost, zipcode, createdAt , updatedAt
+     * customerId, deliveryDate, status, items, totalCost, zipcode, createdAt , updatedAt
      */
     customerId  : {
         type : mongoose.SchemaTypes.ObjectId,
         ref: "User"
     },
-    timestamp  : {
+    deliveryDate  : {
         type : Date,
         required : true
     },

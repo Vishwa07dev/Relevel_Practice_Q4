@@ -11,7 +11,7 @@ exports.createOrder = async (req, res) => {
     // prepare order object to store inside database
     const orderObj = {
         customerId: req.userId,
-        timestamp: req.body.timestamp,
+        deliveryDate: req.body.deliveryDate,
         status: constants.orderStatus.success,
         items: req.body.items,
         totalCost: req.body.totalCost,
@@ -105,7 +105,7 @@ exports.updateOrder = async (req, res) => {
         }
     
         // update respective fields
-        order.timestamp = req.body.timestamp != undefined ? req.body.timestamp : order.timestamp;
+        order.deliveryDate = req.body.deliveryDate != undefined ? req.body.deliveryDate : order.deliveryDate;
         order.status = req.body.status != undefined ? req.body.status : order.status;    
         order.items = req.body.items != undefined ? req.body.items : order.items;    
         order.totalCost = req.body.totalCost != undefined ? req.body.totalCost : order.totalCost;    
